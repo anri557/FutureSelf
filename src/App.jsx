@@ -104,7 +104,11 @@
 
     const login = () => signInWithRedirect(auth, provider);
     useEffect(() => {
-      getRedirectResult(auth).catch((err) => console.error(err));
+      getRedirectResult(auth).then((result) => {
+        if (result?.user) {
+          setUser(result.user);
+        }
+      }).catch((err) => console.error(err));
     }, []);
     const logout = () => signOut(auth);
 
