@@ -1,5 +1,5 @@
   import { useState, useEffect } from "react";
-  import { signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from "firebase/auth";
+  import { signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
   import { collection, addDoc, query, where, onSnapshot, updateDoc, doc } from "firebase/firestore";
   import { auth, provider, db } from "./firebase";
 
@@ -102,14 +102,8 @@
       setTimeout(() => setToast(null), 2800);
     };
 
-    const login = () => signInWithRedirect(auth, provider);
-    useEffect(() => {
-      getRedirectResult(auth).then((result) => {
-        if (result?.user) {
-          setUser(result.user);
-        }
-      }).catch((err) => console.error(err));
-    }, []);
+    const login = () => signInWithPopup(auth, provider);
+   
     const logout = () => signOut(auth);
 
     const sealMessage = async () => {
@@ -129,7 +123,7 @@
 
       await addDoc(collection(db, "messages"), newMsg);
 
-      fetch("https://futureself-backend.onrender.com/api/letters", {
+     fetch("https://futureself-backend.onrender.com/api/letters", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
