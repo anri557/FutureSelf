@@ -123,7 +123,7 @@
 
       await addDoc(collection(db, "messages"), newMsg);
 
-     fetch("https://futureself-backend.onrender.com/api/letters", {
+      fetch("https://futureself-backend-1qxj.onrender.com/api/letters", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
